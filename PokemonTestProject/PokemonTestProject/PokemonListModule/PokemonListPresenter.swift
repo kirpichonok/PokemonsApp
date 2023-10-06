@@ -22,8 +22,18 @@ final class PokemonListPresenter: PokemonListViewInputing {
         await interactor.obtainListOfPokemons()
     }
 
+    func linkBuilder<Content: View>(
+        for identifier: PokemonIdentity,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        NavigationLink(destination: router.makeDetailView(for: identifier)) {
+            content()
+        }
+    }
+
     // MARK: - Private interface
 
     private let interactor: PokemonListInteractorInputing
     private var cancellables = Set<AnyCancellable>()
+    private let router = PokemonListRouter()
 }

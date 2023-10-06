@@ -1,10 +1,19 @@
 import SwiftUI
 
-struct PokemonDetailView<Presenter>: View where Presenter: ObservableObject {
-    @ObservedObject var presenter: Presenter
+struct PokemonDetailView: View {
+    @ObservedObject var presenter: PokemonDetailPresenter
 
     var body: some View {
-        VStack {}
+        VStack {
+            Image(uiImage: presenter.image ?? UIImage(imageLiteralResourceName: "AppIcon"))
+                .resizable()
+            List {
+                Text(presenter.name)
+                Text(presenter.height)
+                Text(presenter.weight)
+            }
+        }
+        .padding()
     }
 }
 

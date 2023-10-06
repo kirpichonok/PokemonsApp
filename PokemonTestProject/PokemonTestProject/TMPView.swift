@@ -1,10 +1,3 @@
-//
-//  TMPView.swift
-//  PokemonTestProject
-//
-//  Created by Kirpichonok Ivan on 6.10.23.
-//
-
 import SwiftUI
 
 struct TMPView: View {
@@ -16,7 +9,3 @@ struct TMPView: View {
         }
     }
 }
-
-// #Preview {
-//    TMPView()
-// }
