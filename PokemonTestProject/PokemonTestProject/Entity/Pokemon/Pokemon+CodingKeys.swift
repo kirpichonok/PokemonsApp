@@ -22,7 +22,7 @@ extension Pokemon {
 
     init(from decoder: Decoder) throws {
         self.id = nil
-        var container = try decoder.container(keyedBy: AnyCodingKey.self)
+        let container = try decoder.container(keyedBy: AnyCodingKey.self)
         height = try container.decode(Int.self, forKey: AnyCodingKey(stringValue: "height"))
         weight = try container.decode(Int.self, forKey: AnyCodingKey(stringValue: "weight"))
 
@@ -31,7 +31,7 @@ extension Pokemon {
 
         let typesContainer = try container.nestedContainer(keyedBy: AnyCodingKey.self, forKey: AnyCodingKey(stringValue: "types"))
         let slotOneContainer = try typesContainer.nestedContainer(keyedBy: AnyCodingKey.self, forKey: AnyCodingKey(intValue: 0))
-        let typeContainer = try container.nestedContainer(keyedBy: AnyCodingKey.self, forKey: AnyCodingKey(stringValue: "type"))
+        let typeContainer = try slotOneContainer.nestedContainer(keyedBy: AnyCodingKey.self, forKey: AnyCodingKey(stringValue: "type"))
         self.type = try typeContainer.decode(String.self, forKey: AnyCodingKey(stringValue: "name"))
     }
 }
