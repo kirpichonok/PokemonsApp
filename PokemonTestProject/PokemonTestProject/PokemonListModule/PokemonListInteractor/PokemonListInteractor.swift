@@ -1,8 +1,9 @@
 import SwiftUI
 
 final class PokemonListInteractor: PokemonListInteractorInputing {
-//    weak var presenter: PokemonListInteractorOutputting?
-
+    @Published var list = [PokemonIdentity]()
+    @Published var isErrorOccurred = false
+    
     func obtainListOfPokemons() async throws -> [PokemonIdentity] {
         let data = try await networkService.load(from: listOfPokemonsAPI)
         let listOfPokemons = try decoder.decode(ListOfPokemons.self, from: data)

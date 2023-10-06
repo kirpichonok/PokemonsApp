@@ -2,10 +2,12 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        PokemonListView(
-            presenter: PokemonListPresenter(
-                interactor: PokemonListInteractor())
-        )
+        NavigationView {
+            TMPView(destination: PokemonListView(
+                presenter: PokemonListPresenter(
+                    interactor: PokemonListInteractor())
+            ))
+        }
     }
 }
 

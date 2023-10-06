@@ -10,13 +10,13 @@ struct PokemonListView<ListSource>: View where ListSource: PokemonListViewInputi
                     Text(pokemon.name)
 //                }
             }
+            .alert("Error", isPresented: $presenter.isErrorOccurred) {
+                Button("Dismiss"){}
+            }
         }
         .navigationBarTitle("Pokemons", displayMode: .inline)
         .task {
            await presenter.obtainListOfPokemons()
-        }
-        .alert("Error", isPresented: $presenter.isErrorOccurred) {
-            Button("Dismiss") {}
         }
     }
 }
