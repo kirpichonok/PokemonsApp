@@ -1,3 +1,5 @@
 protocol PokemonListInteractorInputing: AnyObject {
-    func obtainListOfPokemons() async throws -> [PokemonIdentity]
+//    var isErrorOccurred: Bool { get set }
+//    var list: [PokemonIdentity] { get set }
+    func obtainListOfPokemons() async
 }

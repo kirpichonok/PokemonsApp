@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 
 final class PokemonListPresenter: PokemonListViewInputing {
@@ -6,20 +7,23 @@ final class PokemonListPresenter: PokemonListViewInputing {
     @MainActor @Published var list = [PokemonIdentity]()
     @MainActor @Published var isErrorOccurred = false
 
-    init(interactor: PokemonListInteractorInputing) {
+    init(interactor: PokemonListInteractor) {
         self.interactor = interactor
+        interactor.$list
+            .assign(to: \.list, on: self)
+            .store(in: &cancellables)
+
+        interactor.$isErrorOccurred
+            .assign(to: \.isErrorOccurred, on: self)
+            .store(in: &cancellables)
     }
 
     func obtainListOfPokemons() async {
-        do {
-            let list = try await interactor.obtainListOfPokemons()
-            await MainActor.run { self.list = list }
-        } catch {
-            await MainActor.run { self.isErrorOccurred = true }
-        }
+        await interactor.obtainListOfPokemons()
     }
 
     // MARK: - Private interface
 
     private let interactor: PokemonListInteractorInputing
+    private var cancellables = Set<AnyCancellable>()
 }
