@@ -2,8 +2,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {}
-            .padding()
+        PokemonListView(
+            presenter: PokemonListPresenter(
+                interactor: PokemonListInteractor())
+        )
     }
 }
 
