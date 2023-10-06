@@ -6,6 +6,10 @@ final class NetworkService: NetworkServicing {
     func load(from dataSourceAPI: DataSourceAPI) async throws -> Data {
         try await send(composeRequest(for: dataSourceAPI))
     }
+    
+    func load(from url: URL) async throws -> Data {
+        try await send(URLRequest(url: url))
+    }
 
     // MARK: - Private interface
 
