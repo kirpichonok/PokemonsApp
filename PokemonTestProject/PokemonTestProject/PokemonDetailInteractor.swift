@@ -13,14 +13,8 @@ final class PokemonDetailInteractor {
     }
 
     func obtainPokemonInfo() async {
-        do {
-            let pokemonAPI = DataSourceAPI.pokemonInfo(id: identifier.id)
-            let data = try await networkService.load(from: pokemonAPI)
-            pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-
-        } catch {
-            await MainActor.run { isErrorOccurred = true }
-        }
+        await loadPokemonInfo()
+        await loadPokemonImage()
     }
 
     // MARK: - Private interface
@@ -32,8 +26,8 @@ final class PokemonDetailInteractor {
         do {
             let pokemonAPI = DataSourceAPI.pokemonInfo(id: identifier.id)
             let data = try await networkService.load(from: pokemonAPI)
-            pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-
+            let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+            await MainActor.run { self.pokemon = pokemon }
         } catch {
             await MainActor.run { isErrorOccurred = true }
         }

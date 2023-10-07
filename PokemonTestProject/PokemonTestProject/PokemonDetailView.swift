@@ -14,6 +14,9 @@ struct PokemonDetailView: View {
             }
         }
         .padding()
+        .task {
+            await presenter.obtainPokemonInfo()
+        }
     }
 }
 

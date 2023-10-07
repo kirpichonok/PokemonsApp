@@ -41,7 +41,7 @@ final class PokemonDetailPresenter: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func loadPokemonInfo() async {
+    func obtainPokemonInfo() async {
         await interactor.obtainPokemonInfo()
     }
 
