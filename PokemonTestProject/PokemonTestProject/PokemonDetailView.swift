@@ -7,10 +7,17 @@ struct PokemonDetailView: View {
         VStack {
             Image(uiImage: presenter.image ?? UIImage(imageLiteralResourceName: "AppIcon"))
                 .resizable()
+                .frame(maxWidth: 300, maxHeight: 300)
+                .aspectRatio(contentMode: .fit)
+                .background(gradient)
+                .clipShape(Circle())
+                .padding()
+
             List {
                 Text(presenter.name)
                 Text(presenter.height)
                 Text(presenter.weight)
+                Text(presenter.type)
             }
         }
         .padding()
@@ -18,6 +25,10 @@ struct PokemonDetailView: View {
             await presenter.obtainPokemonInfo()
         }
     }
+
+    // MARK: - Private interface
+
+    private let gradient = LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
 }
 
 #Preview {

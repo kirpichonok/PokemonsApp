@@ -7,6 +7,7 @@ final class PokemonDetailPresenter: ObservableObject {
     @Published var weight = ""
     @Published var image: UIImage?
     @Published var isErrorOccurred = false
+    @Published var type = ""
 
     init(interactor: PokemonDetailInteractor) {
         self.interactor = interactor
@@ -18,14 +19,20 @@ final class PokemonDetailPresenter: ObservableObject {
 
         interactor.$pokemon
             .compactMap(\.?.height)
-            .map { String($0) }
+            .map { self.heightLabelText($0) }
             .assign(to: \.height, on: self)
             .store(in: &cancellables)
 
         interactor.$pokemon
             .compactMap(\.?.weight)
-            .map { String($0) }
+            .map { self.weightLabelText($0) }
             .assign(to: \.weight, on: self)
+            .store(in: &cancellables)
+
+        interactor.$pokemon
+            .compactMap(\.?.type)
+            .map { self.typeLabelText($0) }
+            .assign(to: \.type, on: self)
             .store(in: &cancellables)
 
         interactor.$isErrorOccurred
@@ -49,4 +56,16 @@ final class PokemonDetailPresenter: ObservableObject {
 
     private let interactor: PokemonDetailInteractor
     private var cancellables = Set<AnyCancellable>()
+
+    private func weightLabelText(_ value: Int) -> String {
+        "Weight: \(value)kg"
+    }
+
+    private func heightLabelText(_ value: Int) -> String {
+        "Height: \(value) meters"
+    }
+
+    private func typeLabelText(_ value: String) -> String {
+        "Type: \(value)"
+    }
 }
